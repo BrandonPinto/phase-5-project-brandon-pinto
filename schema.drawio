@@ -1,0 +1,45 @@
+<mxfile host="65bd71144e">
+    <diagram id="q2SWV9OYWoP8EkNQSArm" name="Page-1">
+        <mxGraphModel dx="842" dy="778" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="6" value="Users" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="230" width="95" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Appointments" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="325" y="225" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;ul&gt;&lt;li&gt;email&lt;/li&gt;&lt;li&gt;username&lt;/li&gt;&lt;li&gt;password&lt;/li&gt;&lt;li&gt;image&lt;/li&gt;&lt;li&gt;alias&lt;/li&gt;&lt;li&gt;pronoun(s)&lt;/li&gt;&lt;/ul&gt;" style="text;strokeColor=none;fillColor=none;html=1;whiteSpace=wrap;verticalAlign=middle;overflow=hidden;" vertex="1" parent="1">
+                    <mxGeometry x="510" y="240" width="150" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="&lt;ol&gt;&lt;li&gt;user_id&lt;/li&gt;&lt;li&gt;event_id&lt;/li&gt;&lt;li&gt;gift_name&lt;/li&gt;&lt;li&gt;gift_price&lt;/li&gt;&lt;/ol&gt;" style="text;strokeColor=none;fillColor=none;html=1;whiteSpace=wrap;verticalAlign=middle;overflow=hidden;" vertex="1" parent="1">
+                    <mxGeometry x="305" y="270" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="&lt;ul&gt;&lt;li&gt;session_key&lt;/li&gt;&lt;li&gt;user_id&lt;/li&gt;&lt;/ul&gt;" style="text;strokeColor=none;fillColor=none;html=1;whiteSpace=wrap;verticalAlign=middle;overflow=hidden;" vertex="1" parent="1">
+                    <mxGeometry x="560" y="550" width="140" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" style="edgeStyle=none;html=1;fillColor=#e51400;strokeColor=#B20000;strokeWidth=4;exitX=1;exitY=0.25;exitDx=0;exitDy=0;" edge="1" parent="1" source="16" target="9">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="140.90909090909076" y="480" as="sourcePoint"/>
+                        <Array as="points">
+                            <mxPoint x="610" y="510"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="16" value="Sessions" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="590" y="530" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="KEY:&lt;br&gt;red arrow = belongs_to&lt;br&gt;green arrow =&lt;br&gt;has many through&lt;br&gt;blue arrow =&lt;br&gt;has many" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3c800;fontColor=#000000;strokeColor=#B09500;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="570" width="120" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="&lt;ol&gt;&lt;li&gt;host_id&lt;/li&gt;&lt;li&gt;event_number&lt;/li&gt;&lt;li&gt;name_of_event&lt;/li&gt;&lt;li&gt;min_participants&lt;/li&gt;&lt;li&gt;max_participants&lt;/li&gt;&lt;li&gt;date&lt;/li&gt;&lt;li&gt;time&lt;/li&gt;&lt;/ol&gt;" style="text;strokeColor=none;fillColor=none;html=1;whiteSpace=wrap;verticalAlign=middle;overflow=hidden;" vertex="1" parent="1">
+                    <mxGeometry x="70" y="270" width="160" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" value="Events" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="220" width="100" height="40" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
