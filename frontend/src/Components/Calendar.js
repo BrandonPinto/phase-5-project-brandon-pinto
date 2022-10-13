@@ -4,7 +4,9 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list'
-import Header from '/header'
+import { tokens } from '../Theme'
+import Header from '../Header'
+
 import {
     Box,
     List,
@@ -17,10 +19,15 @@ import {
 
 export default function Calendar() {
 
-
 const theme = useTheme()
 const colors = tokens(theme.palette.mode)
-const [currentEvents, setCurrentEvents] = useState([])
+const [currentEvents, setCurrentEvents] = useState([
+    {
+        id: "5",
+        title: "this is a title",
+        date: "2022-15-09"
+    }
+])
 
 const handleDateClick = (selected) => {
     const title = prompt("Please enter a new title for your event")
@@ -46,50 +53,68 @@ const handleEventClick = (selected) => {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 return (
+
 <Box m="20px">
     <Header title="CALENDAR" subtitle="Full Calendar Interactive Page" />
-    <Box display="flex" justifyContent="space-between">
-            {/* {profile component will go here} */}
+    
+        <Box display="flex" justifyContent="space-between">
+            {/* profile component will go here */}
         <Box
+            style={{height: 400, display:'flex', flexDirection:'column', alignItems:'center'
+            }}
             flex="1 1 20%"
             backgroundColor={colors.primary[400]}
-            p="15px"
-            borderRadius="4px"
+            p="5px"
+            borderRadius="5px"
             >
-            <Typography variant="h5">Events</Typography>
-            <List>
+            <Typography sx={{
+                textAlign: "center",
+                fontSize: "24px"
+            }}
+            variant="h5">Your Events</Typography>
+            <List className="scroller" sx={{
+                width: "225px"
+            }}>
                 {currentEvents.map((event) =>   (
                 <ListItem
                 key={event.id}
                 sx={{backgroundColor:
-                    colors.greenAccent[500], 
-                    margin: "10px 0", borderRadius}}
+                    colors.greenAccent[500],
+                    margin: "2px 0",
+                    borderRadius: "50px",
+                    padding: '3px 20px',
+                    textAlign: "center",
+                    maxWidth: "225px",
+                    wordWrap: "break-word",
+                    flex: "1 1 100%",
+                }}
                     >
+                        {/* each item will contain each part of the users information 
+                        based on what their events are-- change accordingly */}
                         <ListItemText
-                        primary={event.title}
+                        primary= {
+
+                            <Typography    sx={{
+                                marginTop:"-2px",
+                                fontSize: "14px",
+                                lineHeight: "1",
+                                marginBottom: "5px"
+                            }}>
+                                {event.title}
+                            </Typography>
+                        }
+
+                     
                         secondary={
-                            <Typography>
+                            <Typography    sx={{
+                                fontSize: "10px",
+                                lineHeight: "0.5"
+                            }}>
                                 {formatDate(event.start, {
                                     year: "numeric",
                                     month: "short",
-                                    day: "numeric",
+                                    day: "numeric"
                                 })}
                             </Typography>
                         }
@@ -98,8 +123,46 @@ return (
                 ))}
             </List>
         </Box>
+        <div className="space"></div>
+        <Box
+            style={{height: 400}}
+            flex="1 1 20%"
+            backgroundColor={colors.primary[400]}
+            p="5px"
+            borderRadius="5px"
+            >
+            <Typography  variant="h5">Community Events</Typography>
+            <List>
+                {currentEvents.map((event) =>   (
+                <ListItem
+                key={event.id}
+                sx={{backgroundColor:
+                    colors.greenAccent[500], 
+                    margin: "2px 0", 
+                    borderRadius: "50px",
+                }}
+                    >
+                        {/* each item will contain each part of the users information 
+                        based on what their events are-- change accordingly */}
+                        <ListItemText
+                        primary={event.title}
+                        secondary={
+                            <Typography>
+                                {formatDate(event.start, {
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric"
+                                })}
+                            </Typography>
+                        }
+                        />
+                    </ListItem>
+                ))}
+            </List>
+        </Box>
+
         {/* {CALENDAR} */}
-        <Box flex="1 1 100%" ml="15px">
+        <Box flex="1 1 100%" ml="40px">
             <FullCalendar
             height="75vh"
             plugins={[
@@ -109,9 +172,9 @@ return (
                 listPlugin
             ]}
             headerToolbar={{
-                left: "prev, next today",
+                left: "prev,next today",
                 center: "title",
-                right: "datGridMonth, timeGridWeek, timeGridDay, listMonth"
+                right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
             }}
             initialView="dayGridMonth"
             editable={true}
@@ -121,51 +184,11 @@ return (
             select={handleDateClick}
             eventClick={handleEventClick}
             eventsSet={(events) => setCurrentEvents(events)}
-            initialEvents={[
-                {id: "1234", title: "All-day-event", date: "2022-09-14"},
-                {id: "4321", title: "Timed Events", date: "2022-09-14"}
-            ]}
+            initialEvents={[{id: "55", title: "do this", date: "2022-08-14"}]}
+            // initialEvents={[this will contain currentUser.events && currentUser.calendar]}
             />
         </Box>
     </Box>
 </Box>
     )
 }
-    // const handleDateSelect = (selectInfo) => {
-        //     let title = prompt('Please enter a title for your event')
-        //     let calendarApi = selectInfo.view.calendar
-        
-        //     calendarApi.unselect()
-        
-        //     if(title) {
-            //         calendarApi.addEvent({
-                //             title,
-                //             start: selectInfo.startStr,
-                //             end: selectInfo.endStr
-                //         })
-                //         fetch("localhost:3000/calendar", {
-                    //             method: "POST",
-                    //             headers: {
-                        //                 "Content-Type": "application/json"
-                        //             },
-                        //             body: JSON.stringify({
-                            //                 title: title,
-                            //                 start: selectInfo.startStr,
-                            //                 end: selectInfo.endStr
-                            //             })
-                            //         })
-                            //     }
-                            // }
-                            // THIS IS IN THE RETURN STATEMENT
-                            // <FullCalendar 
-                            // initialView="timeGridMonth"
-                            // headerToolbar={{
-                                //     left: "prev, next, today, addEventButton",
-                                //     center: "title",
-                                //     right: "dayGridMonth, timeGridWeek, timeGridDay"
-                                // }}
-                                // plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                                // editable={true}
-                                // selectable={true}
-                                // select={handleDateSelect}
-                                // />
