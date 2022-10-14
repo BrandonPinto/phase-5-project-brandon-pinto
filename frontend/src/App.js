@@ -1,8 +1,7 @@
 import Calendar from './Components/Calendar';
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./Theme";
-import Header from './Header';
-import Profile from './Components/Profile'
+
 
 function App() {
 

@@ -5,7 +5,6 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list'
 import { tokens } from '../Theme'
-import Header from '../Header'
 
 import {
     Box,
@@ -56,7 +55,6 @@ const handleEventClick = (selected) => {
 return (
 
 <Box m="20px">
-    <Header title="CALENDAR" subtitle="Full Calendar Interactive Page" />
     
     <Box display="flex" justifyContent="space-between">
             {/* profile component will go here */}
