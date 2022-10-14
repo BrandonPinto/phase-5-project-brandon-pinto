@@ -9,7 +9,8 @@ body,
   width: 100%;
   font-family: "Source Sans Pro", sans-serif;
 }
-
+.body {
+}
 .app {
 
 }
@@ -23,10 +24,11 @@ body,
 .space {
   margin-left: 1%;
 }
-.scroller {
-  flex: 1;
-  background: #aaa;
-  overflow-y: scroll;
+.invisible-scrollbar {
+  scrollbar-width: none;
+}
+.invisible-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 

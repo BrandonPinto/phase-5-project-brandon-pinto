@@ -58,44 +58,43 @@ return (
 <Box m="20px">
     <Header title="CALENDAR" subtitle="Full Calendar Interactive Page" />
     
-        <Box display="flex" justifyContent="space-between">
+    <Box display="flex" justifyContent="space-between">
             {/* profile component will go here */}
-        <Box
-            style={{height: 400, display:'flex', flexDirection:'column', alignItems:'center'
+        <Box className="invisible-scrollbar"
+            style={{height: 400, display:'flex', flexDirection:'column', alignItems:'center', overflowY: "scroll"
             }}
             flex="1 1 20%"
             backgroundColor={colors.primary[400]}
             p="5px"
             borderRadius="5px"
+            scrollbarColor= {colors.primary[400]}
             >
             <Typography sx={{
                 textAlign: "center",
-                fontSize: "24px"
+                fontSize: "20px"
             }}
             variant="h5">Your Events</Typography>
-            <List className="scroller" sx={{
-                width: "225px"
+            <List sx={{
+                width: "90%"
             }}>
                 {currentEvents.map((event) =>   (
                 <ListItem
                 key={event.id}
                 sx={{backgroundColor:
                     colors.greenAccent[500],
-                    margin: "2px 0",
+                    margin: "10px 0",
                     borderRadius: "50px",
-                    padding: '3px 20px',
+                    padding: '4px 20px',
                     textAlign: "center",
-                    maxWidth: "225px",
                     wordWrap: "break-word",
-                    flex: "1 1 100%",
+                    flex: "1 1 100%"
                 }}
                     >
                         {/* each item will contain each part of the users information 
                         based on what their events are-- change accordingly */}
                         <ListItemText
                         primary= {
-
-                            <Typography    sx={{
+                            <Typography sx={{
                                 marginTop:"-2px",
                                 fontSize: "14px",
                                 lineHeight: "1",
@@ -124,30 +123,54 @@ return (
             </List>
         </Box>
         <div className="space"></div>
-        <Box
-            style={{height: 400}}
+        <Box className="invisible-scrollbar"
+            style={{height: 400, display:'flex', flexDirection:'column', alignItems:'center', overflowY: "scroll"
+            }}
             flex="1 1 20%"
             backgroundColor={colors.primary[400]}
             p="5px"
             borderRadius="5px"
+            scrollbarColor= {colors.primary[400]}
             >
-            <Typography  variant="h5">Community Events</Typography>
-            <List>
+            <Typography sx={{
+                textAlign: "center",
+                fontSize: "20px"
+            }}
+            variant="h3">Community Events</Typography>
+            <List sx={{
+                width: "90%"
+            }}>
                 {currentEvents.map((event) =>   (
                 <ListItem
                 key={event.id}
                 sx={{backgroundColor:
-                    colors.greenAccent[500], 
-                    margin: "2px 0", 
+                    colors.greenAccent[500],
+                    margin: "10px 0",
                     borderRadius: "50px",
+                    padding: '4px 20px',
+                    textAlign: "center",
+                    wordWrap: "break-word",
+                    flex: "1 1 100%"
                 }}
                     >
                         {/* each item will contain each part of the users information 
                         based on what their events are-- change accordingly */}
                         <ListItemText
-                        primary={event.title}
+                        primary= {
+                            <Typography sx={{
+                                marginTop:"-2px",
+                                fontSize: "14px",
+                                lineHeight: "1",
+                                marginBottom: "5px"
+                            }}>
+                                {event.title}
+                            </Typography>
+                        }
                         secondary={
-                            <Typography>
+                            <Typography    sx={{
+                                fontSize: "10px",
+                                lineHeight: "0.5"
+                            }}>
                                 {formatDate(event.start, {
                                     year: "numeric",
                                     month: "short",
@@ -160,10 +183,10 @@ return (
                 ))}
             </List>
         </Box>
-
         {/* {CALENDAR} */}
         <Box flex="1 1 100%" ml="40px">
             <FullCalendar
+            flex="1 1 100%"
             height="75vh"
             plugins={[
                 dayGridPlugin,
