@@ -59,13 +59,13 @@ return (
     <Box display="flex" justifyContent="space-between">
             {/* profile component will go here */}
         <Box className="invisible-scrollbar"
-            style={{height: 400, display:'flex', flexDirection:'column', alignItems:'center', overflowY: "scroll"
+            style={{height: 715, display:'flex', flexDirection:'column', alignItems:'center', overflowY: "scroll"
             }}
             flex="1 1 20%"
             backgroundColor={colors.primary[400]}
             p="5px"
             borderRadius="5px"
-            scrollbarColor= {colors.primary[400]}
+            scrollbarcolor= {colors.primary[400]}
             >
             <Typography sx={{
                 textAlign: "center",
@@ -122,13 +122,13 @@ return (
         </Box>
         <div className="space"></div>
         <Box className="invisible-scrollbar"
-            style={{height: 400, display:'flex', flexDirection:'column', alignItems:'center', overflowY: "scroll"
+            style={{height: 715, display:'flex', flexDirection:'column', alignItems:'center', overflowY: "scroll"
             }}
             flex="1 1 20%"
             backgroundColor={colors.primary[400]}
             p="5px"
             borderRadius="5px"
-            scrollbarColor= {colors.primary[400]}
+            scrollbarcolor= {colors.primary[400]}
             >
             <Typography sx={{
                 textAlign: "center",

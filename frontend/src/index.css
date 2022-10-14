@@ -9,16 +9,11 @@ body,
   width: 100%;
   font-family: "Source Sans Pro", sans-serif;
 }
-.body {
-}
-.app {
 
-}
 .fc {
-  /* margin-top: 4%;
-  margin-left: 9%; */
+  margin-left: 8%;
   width:60vw;
-  min-height: 80vh
+  min-height: 85vh
 }
 
 .space {
@@ -31,27 +26,3 @@ body,
   display: none;
 }
 
-
-/* :root {
-  --fc-list-event-dot-width: 10px;
-  --fc-list-event-hover-bg-color: #f5f5f5;
-} */
-/* .MuiList-root {
-  padding-top: 2px;
-  padding-bottom: 2px;
-} */
-
-/* .MuiListItem-root .MuiListItem-gutters .MuiListItem-padding .css-456goe-MuiListItem-root {
-  text-align: center;
-
-  padding-left: 10px;
-
-  padding-right: 10px;
-}
-.css-456goe-MuiListItem-root {
-  text-align: center;
-  padding-top: 2px;
-  padding-left: 10px;
-  padding-bottom: 2px;
-  padding-right: 10px;
-} */

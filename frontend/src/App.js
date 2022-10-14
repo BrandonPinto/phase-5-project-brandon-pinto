@@ -1,8 +1,7 @@
 import Calendar from './Components/Calendar';
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./Theme";
-
-
+import Navbar from './Components/Navbar';
 function App() {
 
 //   const [loggedIn, setLoggedIn] = useState({})
@@ -37,6 +36,7 @@ const [theme, colorMode] = useMode();
 <ThemeProvider theme={theme}>
 <CssBaseline />
     <div className="App">
+      <Navbar />
       <Calendar/>           
     </div>
     </ThemeProvider>
