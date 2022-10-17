@@ -42,6 +42,7 @@ const handleDateClick = (selected) => {
         allDay: selected.allDay
     })
 }
+
 const handleEventClick = (selected) => {
     if(
         window.confirm(
@@ -192,6 +193,10 @@ return (
                 interactionPlugin,
                 listPlugin
             ]}
+            sx={{
+                backgroundColor: "red",
+                color: "red"
+            }}
             headerToolbar={{
                 left: "prev,next today",
                 center: "title",
@@ -206,7 +211,6 @@ return (
             eventClick={handleEventClick}
             eventsSet={(events) => setCurrentEvents(events)}
             initialEvents={[{id: "55", title: "do this", date: "2022-08-14"}]}
-            // initialEvents={[this will contain currentUser.events && currentUser.calendar]}
             />
         </Box>
     </Box>

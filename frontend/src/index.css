@@ -15,7 +15,10 @@ body,
   width:60vw;
   min-height: 85vh
 }
-
+.fc .fc-prev-primary {
+  background-color: red;
+  color: red;
+}
 .space {
   margin-left: 1%;
 }
