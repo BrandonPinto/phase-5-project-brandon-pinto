@@ -1,5 +1,10 @@
 class User < ApplicationRecord
-    has_one :calendar, dependant: :destroy
-    has_many :appointments
-    has_many :events, through: :appointments
+    has_many :personal_events
+    has_many :contacts
+    has_many :participants
+    has_many :community_events, through: :participants
+
+    has_secure_password
+
+
 end

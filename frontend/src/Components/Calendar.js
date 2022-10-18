@@ -29,6 +29,7 @@ const [currentEvents, setCurrentEvents] = useState([
 ])
 
 const handleDateClick = (selected) => {
+    console.log(selected)
     const title = prompt("Please enter a new title for your event")
     const calendarApi = selected.view.calendar
     calendarApi.unselect()

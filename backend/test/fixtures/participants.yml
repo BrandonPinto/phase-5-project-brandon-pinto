@@ -2,12 +2,6 @@
 
 one:
   user_id: 1
-  event_id: 1
-  gift_name: MyString
-  gift_price: 1
 
 two:
   user_id: 1
-  event_id: 1
-  gift_name: MyString
-  gift_price: 1

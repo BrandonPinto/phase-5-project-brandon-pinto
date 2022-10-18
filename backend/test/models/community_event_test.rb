@@ -1,6 +1,6 @@
 require "test_helper"
 
-class AppointmentTest < ActiveSupport::TestCase
+class CommunityEventTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
