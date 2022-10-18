@@ -1,0 +1,2 @@
+class PersonalEvent < ApplicationRecord
+end

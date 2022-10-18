@@ -4,10 +4,8 @@ one:
   title: MyString
   start: MyString
   end: MyString
-  appointment_id: 1
 
 two:
   title: MyString
   start: MyString
   end: MyString
-  appointment_id: 1

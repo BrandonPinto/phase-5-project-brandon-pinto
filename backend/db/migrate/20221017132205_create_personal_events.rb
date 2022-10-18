@@ -1,0 +1,11 @@
+class CreatePersonalEvents < ActiveRecord::Migration[7.0]
+  def change
+    create_table :personal_events do |t|
+      t.text :title
+      t.text :start
+      t.text :end
+
+      t.timestamps
+    end
+  end
+end

@@ -1,10 +1,15 @@
 Rails.application.routes.draw do
-  resources :calendars
+  resources :participants
+  resources :community_events
+  resources :contacts
   resources :users
-  resources :appointments
-  resources :events
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :personal_events
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+#Personal_events routes here
+get "personal_events", to: "personal_events#index"
+post "/personal_events", to: "personal_events#create"
+delete "/personal_events", to: "personal_events#destroy"
+patch "/personal_events", to: "personal_events#update"
+get "/personal_events", to: "personal_events#user_personal_events"
+
 end

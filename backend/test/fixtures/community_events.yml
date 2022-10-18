@@ -1,19 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  host_id: 1
-  event_number: 1
   name_of_event: MyString
-  min_participant: 1
   max_participant: 1
-  date: 1
-  time: 1
+  min_particpant: 1
+  start: MyString
+  end: MyString
 
 two:
-  host_id: 1
-  event_number: 1
   name_of_event: MyString
-  min_participant: 1
   max_participant: 1
-  date: 1
-  time: 1
+  min_particpant: 1
+  start: MyString
+  end: MyString
