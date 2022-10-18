@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   
-  before_action :set_user, only: %i[ show update destroy ]  
+  before_action :set_user, only: %i[ show update ]  
 def index
   @users = User.all
 
@@ -26,21 +26,15 @@ def create
   render json: user
 end
 
-# def update
-#   @user.update(username: params[:username], password: params[:password])
-#   render json: @user
-# end
-#need to be able to update their events and community events, CUSTOM METHOD REQUIRED FOR COMMUNITY EVENT HOSTS..
-
-def destroy
-  @user.destroy
-  render json: @user  
+def update
+  @user.update(username: params[:username], password: params[:password])
+  render json: @user
 end
+
 
 private
   def set_user
     token = request.headers["token"]
-    puts token
     user_id = decode_token(token)
     @user = User.find_by(id: user_id)
   # Find a User
