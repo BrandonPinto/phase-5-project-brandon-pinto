@@ -1,58 +1,58 @@
 class CommunityEventsController < ApplicationController
-    before_action :set_community_event, only: %i[ show_community_participants update destroy ]
+    before_action :authorized, only: [ :create, :show, :update, :destroy ]
 
 def index
-    @community_event = CommunityEvent.all
+    @community_events = CommunityEvent.all
+    render json: @community_events
 end
 
 def create
 token = request.headers["token"]
 user_id = decode_token(token)
-    if token
-        new_community_event = CommunityEvent.create!(max_participant: params[:max_participant], min_participant: params[:min_participant] title: params[:title], start: params[:start], end: params[:end] user_id: user_id)
-        render json: new_community_event
-    else
+    if user_id
+        new_community_event = CommunityEvent.create!(max_participant: params[:max_participant], min_participant: params[:min_participant], title: params[:title], start: params[:start], end: params[:end], user_id: user_id)
+        render json: {community_event: new_community_event}
+        else
         render json: {error: "Invalid Token"}, status: 404
     end
 end
 
 def update
-    host = CommunityEvent.find_by!(user_id: params[:user_id])
-    if
-        host
-    CommunityEvent.update(max_participant: params[:max_participant], min_participant: params[:min_participant], title: params[:title], start: params[:start], end: params[:end])
-    render json: @community_event
-    else
-        render json: {error: "One or more fields are incorrect!"}, :unprocessable_entity
+token = request.headers["token"]
+user_id = decode_token(token)
+event = CommunityEvent.find_by(id: params[:id])
+    host = event.user_id
+        if host == user_id
+        updated_event = CommunityEvent.update(title: params[:title], start: params[:start], end: params[:end])
+            render json: updated_event
+        end
+            
 end
 
-def show_community_participants
-    host = CommunityEvent.find_by!(user_id: params[:user_id])
-    if
-        host
-    @participants.find_all_by(params[:id])
-    render json: @participants
-        else
-    render json: {error: "You are not the host, you cannot see all participants!"}, :not_authorized
-    end
-end
 
 def destroy
-    token = request.headers["token"]
-    user_id = decode_token(token)
-    host = CommunityEvent.find_by!(user_id: params[:user_id])
-    if user_id = host
-    @participant.destroy()
-    else
-        render json: {error: "You are not the host and cannot remove participants..."}, :not_authorized
-    end
+token = request.headers["token"]
+user_id = decode_token(token)
+event = CommunityEvent.find_by(id: params[:id])
+    host = event.user_id
+        if host == user_id
+        CommunityEvent.destroy()
+        prompt("You have deleted this event.")
+        end
+            
 end
+
 
 
 private
 
-    def set_community_event
-        @community_event = CommunityEvent.find(params[:id])
-    end
+
+
+
+end
+
+def set_community_event
+    @community_event = CommunityEvent.find(params[:id])
+end
 
 end
