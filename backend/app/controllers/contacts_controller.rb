@@ -1,17 +1,21 @@
 class ContactsController < ApplicationController
-    before_action :authorized, only: [ :create, :show, :update, :destroy ]
-    before_action :set_contact, only: %i[ show destroy update ]
+    before_action :authorized, only: [ :index, :create, :show, :update, :destroy ]
+    before_action :set_contact, only: %i[ update show destroy ]
 
 def index
     @contacts = Contact.all
     render json: @contacts
 end
 
+def show
+    render json: @current_user
+end
+
 def create
 token = request.headers["token"]
 user_id = decode_token(token)
     if user_id
-        new_contact = Contact.create!(email: params[:email], first_name: params[:first_name], last_name: params[:last_name], company: params[:company], phone_number: params[:phone_number], location: params[:location], notes: params[:notes], user_id: user_id)
+        new_contact = Contact.create!(email: params[:email], first_name: params[:first_name], last_name: params[:last_name], company: params[:company], phone_number: params[:phone_number], location: params[:location], notes: params[:notes])
         render json: new_contact
     else
         render json: {error: "One or more fields are incorrect"}, status: :unprocessable_entity
@@ -19,19 +23,13 @@ user_id = decode_token(token)
 end
 
 def update
-token = request.headers["token"]
-user_id = decode_token(token)
-    if user_id
-        Contact.update(email: params[:email], first_name: params[:first_name], last_name: params[:last_name], company: params[:company], phone_number: params[:phone_number], location: params[:location], notes: params[:notes])
+    if @current_user
+        @contact.update!(contact_params)
         render json: @contact
     else
-        render json: @contact.errors, status: :unprocessable_entity
+        render json: {error: "Information may be invalid or incorrect."}, status: :unprocessable_entity
     end
-end
-
-
-def show
-    render json: @contact
+        
 end
 
 def destroy
@@ -44,7 +42,13 @@ end
 
 private
 
+def contact_params
+    params.permit(:first_name, :last_name, :company, :email, :phone_number, :location, :notes)
+end
+
 def set_contact
+token = request.headers["token"]
+user_id = decode_token(token)
     @contact = Contact.find(params[:id])
 end
 

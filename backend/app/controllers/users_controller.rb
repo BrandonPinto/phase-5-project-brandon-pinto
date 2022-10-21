@@ -1,14 +1,13 @@
 class UsersController < ApplicationController
+before_action :authorized, only: [:show, :update]
 
-before_action :authorized, only: [:show]
 
-def index
-  users = User.all
-  render json: users
-end
-
+# def index
+#   users = User.all
+#   render json: users
+# end
 def show
-  render json: {user: @current_user}
+  render json: @current_user
 end
 
 def login #for /login
@@ -30,18 +29,14 @@ def create #for /signup
 end 
 
 def update
-  @user.update!(user_params)
-  render json: @user
+@current_user.update(user_params)
+render json: @current_user
 end
 
 private
 
-def set_user
-  @user = @current_user
-end
-
 def user_params
-  params.require(:user).permit(:email, :password_digest)
+  params.permit(:image, :alias, :pronoun)
 end
 
 end

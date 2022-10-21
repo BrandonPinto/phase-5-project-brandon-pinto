@@ -21,7 +21,6 @@ def authorized
 end
 
 def decode_token(token)
-    puts token
     JWT.decode(token, secret_key)[0]["user_id"]
 end
 

@@ -1,6 +1,6 @@
 class CommunityEvent < ApplicationRecord
 belongs_to :user
-has_many :participants
+has_many :participants, dependent: :destroy
 
 
 # def show_community_participants
@@ -20,4 +20,5 @@ has_many :participants
 #         render json: {error: "you are not the host, sorry!"}, 
 #     end
 # end
+
 end
