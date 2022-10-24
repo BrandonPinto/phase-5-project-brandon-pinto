@@ -43,6 +43,7 @@ const handleDateClick = (selected) => {
         allDay: selected.allDay
     })
 }
+
 const handleEventClick = (selected) => {
     if(
         window.confirm(
