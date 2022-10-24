@@ -1,3 +1,3 @@
 class CommunityEventSerializer < ActiveModel::Serializer
-  attributes :id, :name_of_event, :max_participant, :min_particpant, :start, :end
+  attributes :title, :id, :user_id, :max_participant, :min_participant, :start, :end
 end

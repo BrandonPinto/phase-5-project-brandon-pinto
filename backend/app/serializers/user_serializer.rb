@@ -1,3 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :personal_event_id, :contact_id, :email, :username, :password, :image, :alias, :pronoun
+  attributes :id, :user_email, :username, :image, :alias, :pronoun
+  has_many :contacts
+  has_many :personal_events
+  has_many :community_events
 end

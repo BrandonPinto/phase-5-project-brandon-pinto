@@ -33,6 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_17_195859) do
     t.text "phone_number"
     t.text "location"
     t.text "notes"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -45,6 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_17_195859) do
   end
 
   create_table "personal_events", force: :cascade do |t|
+    t.integer "user_id"
     t.text "title"
     t.text "start"
     t.text "end"
@@ -53,9 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_17_195859) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.integer "personal_event_id"
-    t.integer "contact_id"
-    t.text "email"
+    t.text "user_email"
     t.text "username"
     t.text "password_digest"
     t.text "image"
