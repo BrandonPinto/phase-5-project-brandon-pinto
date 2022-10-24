@@ -5,9 +5,10 @@ Contact.destroy_all
 CommunityEvent.destroy_all
 
 puts "seeding started..."
-User.create(email: "host@gmail", username: "tester", password: "test123", image: "https://image-cdn.essentiallysports.com/wp-content/uploads/Hulk-Hogan-2.png", alias: "tester", pronoun: "he")
-User.create(email: "something@gmail", username: "abc123", password: "abc123", image: "https://image-cdn.essentiallysports.com/wp-content/uploads/Hulk-Hogan-2.png", alias: "chicken", pronoun: "he")
-User.create(email: "porkytest@gmail", username: "test", password: "porky", image: "https://image-cdn.essentiallysports.com/wp-content/uploads/Hulk-Hogan-2.png", alias: "port", pronoun: "she")
+
+User.create!(user_email: "host@gmail.com", username: "tester", password: "test1234", image: "https://image-cdn.essentiallysports.com/wp-content/uploads/Hulk-Hogan-2.png", alias: "tester", pronoun: "he")
+User.create!(user_email: "something@gmail.com", username: "abc123", password: "abc12345", image: "https://image-cdn.essentiallysports.com/wp-content/uploads/Hulk-Hogan-2.png", alias: "chicken", pronoun: "he")
+User.create!(user_email: "porkytest@gmail.com", username: "brandon", password: "password1", image: "https://image-cdn.essentiallysports.com/wp-content/uploads/Hulk-Hogan-2.png", alias: "port", pronoun: "she")
 PersonalEvent.create(user_id: 1,title: "start", start: "2022-10-08", end: "2022-10-09")
 PersonalEvent.create(user_id: 2,title: "wooooooo", start: "2022-10-31", end: "2022-11-01")
 PersonalEvent.create(user_id: 3,title: "do something", start: "2022-10-20", end: "2022-10-21")
@@ -17,4 +18,5 @@ Contact.create(user_id: 3,email: "karl@gmail.com", first_name: "karl", last_name
 CommunityEvent.create!(user_id: 1, max_participant: 20, min_participant: 1, title: "chicken-heads", start: "Wed Oct 26 2022 00:00:00 GMT-0400 (Eastern Daylight Time)", end: "Fri Oct 28 2022 00:00:00 GMT-0400 (Eastern Daylight Time)")
 Participant.create(user_id: 2, community_event_id: 1)
 Participant.create(user_id: 3, community_event_id: 1)
+
 puts "done SEEDING!"

@@ -1,6 +1,6 @@
 class CommunityEventsController < ApplicationController
     before_action :authorized, only: [ :index, :create, :show, :update, :destroy ]
-    before_action :set_community_event, only: [:remove_participant]
+    before_action :set_community_event, only: [:remove_participant, :show_event_participants]
 
 def index
     @community_events = CommunityEvent.all
@@ -34,6 +34,18 @@ host = event.user_id
         render json: {error: "You are not the host, please ask the host to apply any changes you're requesting!"}, status: :unauthorized
     end
         
+end
+
+def show_event_participants
+token = request.headers["token"]
+current_user = decode_token(token)
+host = @community_event.user_id
+    if host == current_user
+        all_participants = Participant.where(community_event_id: params[:community_event_id])
+        render json: all_participants
+    else
+        render json: {error: "You are not the host and cannot see all participants, sorry!"}
+    end
 end
 
 def remove_participant
