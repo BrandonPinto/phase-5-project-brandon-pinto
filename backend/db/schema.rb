@@ -31,7 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_17_195859) do
     t.text "last_name"
     t.text "company"
     t.text "phone_number"
-    t.text "location"
+    t.text "address"
     t.text "notes"
     t.integer "user_id"
     t.datetime "created_at", null: false

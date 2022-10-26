@@ -17,7 +17,9 @@ class User < ApplicationRecord
     validates :user_email, uniqueness: true, presence: true, confirmation: { case_sensitive: true }
     validates :user_email, email: true
 
-    
+    # def comm_events 
+    #     self.community_events
+    # end
 
 
 end

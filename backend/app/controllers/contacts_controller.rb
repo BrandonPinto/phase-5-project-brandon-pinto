@@ -1,6 +1,6 @@
 class ContactsController < ApplicationController
     before_action :authorized, only: [ :index, :create, :show, :update, :destroy ]
-    before_action :set_contact, only: %i[ update show destroy ]
+    before_action :set_contact, only: %i[ update show ]
 
 def index
     @contacts = Contact.all
@@ -12,10 +12,8 @@ def show
 end
 
 def create
-token = request.headers["token"]
-user_id = decode_token(token)
-    if user_id
-        new_contact = Contact.create!(email: params[:email], first_name: params[:first_name], last_name: params[:last_name], company: params[:company], phone_number: params[:phone_number], location: params[:location], notes: params[:notes])
+    if @current_user
+        new_contact = Contact.create!(user_id: @current_user.id, email: params[:email], first_name: params[:first_name], last_name: params[:last_name], company: params[:company], phone_number: params[:phone_number], address: params[:address], notes: params[:notes])
         render json: new_contact
     else
         render json: {error: "One or more fields are incorrect"}, status: :unprocessable_entity
@@ -33,9 +31,7 @@ def update
 end
 
 def destroy
-token = request.headers["token"]
-user_id = decode_token(token)
-    if user_id
+    if @current_user
     @contact.destroy
     end
 end

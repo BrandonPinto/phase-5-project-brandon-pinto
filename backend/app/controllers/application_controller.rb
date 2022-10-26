@@ -11,6 +11,8 @@ def logged_in_user
         token = headers
         current_id = JWT.decode(token, 'token', true, algorithm: 'HS256')
         @current_user = User.find(current_id[0]["user_id"])
+        puts "hi current"
+        puts @current_user
         @current_user
     end
 end

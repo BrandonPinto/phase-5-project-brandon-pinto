@@ -1,6 +1,6 @@
 class PersonalEventsController < ApplicationController
     before_action :set_personal_event, only: %i[ show destroy ]
-    before_action :authorized, only: [:show, :create, :update, :destroy, :index]
+    before_action :authorized, only: [:show, :create, :update, :destroy]
 
 def index
     events = PersonalEvent.all

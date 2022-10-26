@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-before_action :authorized, only: [:show, :update]
+before_action :authorized, only: [ :update]
 
 
 def index
@@ -8,6 +8,7 @@ def index
 end
 
 def show
+
   render json: @current_user
 end
 
