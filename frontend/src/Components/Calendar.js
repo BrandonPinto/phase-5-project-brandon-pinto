@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FullCalendar, {formatDate} from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list'
 import { tokens } from '../Theme'
+import Header from './Header'
+import Navbar from './Navbar'
+
 
 import {
     Box,
@@ -18,23 +21,66 @@ import {
 
 export default function Calendar() {
 
+const [userEvents, setUserEvents] = useState([])
+const [userCommunityEvents, setUserCommunityEvents] = useState([])
 const theme = useTheme()
 const colors = tokens(theme.palette.mode)
-const [currentEvents, setCurrentEvents] = useState([
-    {
-        id: "5",
-        title: "this is a title",
-        date: "2022-15-09"
-    }
-])
+
+
+const reFetch = (event) => {
+    let token = localStorage.getItem("token")
+    fetch(`http://localhost:3000/personal_events`, {
+        method: "GET",
+        headers: {
+            token:token,
+            "Content-Type": "application/json"
+        },
+    }).then((res) => res.json())
+    .then(data => {
+        setUserEvents(data)
+    })
+    console.log("i am refetching")
+}
+
+useEffect(() => {
+    let token = localStorage.getItem("token")
+    fetch(`http://localhost:3000/personal_events`, {
+        method: "GET",
+        headers: {
+            token:token,
+            "Content-Type": "application/json"
+        },
+    }).then((res) => res.json())
+    .then(data => {
+        setUserEvents(data)
+    })
+}, [])
+
+useEffect(() => {
+    let token = localStorage.getItem("token")
+    fetch(`http://localhost:3000/participants`, {
+        method: "GET",
+        headers: {
+            token:token,
+            "Content-Type": "application/json"
+        },
+    }).then((res)=> res.json())
+    .then(data => {
+        setUserCommunityEvents(data)
+        
+    })
+},[])
+
+
+
 
 const handleDateClick = (selected) => {
-    console.log(selected)
+    // console.log(selected)
     const title = prompt("Please enter a new title for your event")
     const calendarApi = selected.view.calendar
     calendarApi.unselect()
 
-    if(title)
+    if(title !== "" && null)
     calendarApi.addEvent({
         id: `${selected.dateStr}-${title}`,
         title,
@@ -42,7 +88,23 @@ const handleDateClick = (selected) => {
         end: selected.endStr,
         allDay: selected.allDay
     })
+    fetch("http://localhost:3000/personal_events/user", {
+    method: "POST",
+    headers: {
+        "token": localStorage.getItem("token"),
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        title: title,
+        start: selected.startStr,
+        end: selected.endStr
+    })
+    
+}).catch(error => console.log(error))
+reFetch()
 }
+
+
 
 const handleEventClick = (selected) => {
     if(
@@ -55,15 +117,17 @@ const handleEventClick = (selected) => {
 }
 
 return (
-
+<div>
+<Navbar/>
+    <Header title= "Your Calendar"/>
 <Box m="20px">
     
     <Box display="flex" justifyContent="space-between">
             {/* profile component will go here */}
         <Box className="invisible-scrollbar"
-            style={{height: 715, display:'flex', flexDirection:'column', alignItems:'center', overflowY: "scroll"
+            style={{height: 675, display:'flex', flexDirection:'column', alignItems:'center', overflowY: "scroll"
             }}
-            flex="1 1 20%"
+            flex="1 1 22%"
             backgroundColor={colors.primary[400]}
             p="5px"
             borderRadius="5px"
@@ -71,19 +135,19 @@ return (
             >
             <Typography sx={{
                 textAlign: "center",
-                fontSize: "20px"
+                fontSize: "18px"
             }}
-            variant="h5">Your Events</Typography>
+            variant="h5">Your Personal Events</Typography>
             <List sx={{
                 width: "90%"
             }}>
-                {currentEvents.map((event) =>   (
+                {userEvents.map((event) =>   (
                 <ListItem
                 key={event.id}
                 sx={{backgroundColor:
                     colors.greenAccent[500],
                     margin: "10px 0",
-                    borderRadius: "50px",
+                    borderRadius: "30px",
                     padding: '4px 20px',
                     textAlign: "center",
                     wordWrap: "break-word",
@@ -124,9 +188,9 @@ return (
         </Box>
         <div className="space"></div>
         <Box className="invisible-scrollbar"
-            style={{height: 715, display:'flex', flexDirection:'column', alignItems:'center', overflowY: "scroll"
+            style={{height: 675, display:'flex', flexDirection:'column', alignItems:'center', overflowY: "scroll"
             }}
-            flex="1 1 20%"
+            flex="1 1 22%"
             backgroundColor={colors.primary[400]}
             p="5px"
             borderRadius="5px"
@@ -134,25 +198,26 @@ return (
             >
             <Typography sx={{
                 textAlign: "center",
-                fontSize: "20px"
+                fontSize: "18px"
             }}
-            variant="h3">Community Events</Typography>
+            variant="h1">Your Community Events</Typography>
             <List sx={{
                 width: "90%"
             }}>
-                {currentEvents.map((event) =>   (
+                {userCommunityEvents.map((event) =>   (
                 <ListItem
                 key={event.id}
                 sx={{backgroundColor:
                     colors.greenAccent[500],
                     margin: "10px 0",
-                    borderRadius: "50px",
+                    borderRadius: "30px",
                     padding: '4px 20px',
                     textAlign: "center",
                     wordWrap: "break-word",
                     flex: "1 1 100%"
                 }}
                     >
+                        {console.log("hello world")}
                         {/* each item will contain each part of the users information 
                         based on what their events are-- change accordingly */}
                         <ListItemText
@@ -185,6 +250,7 @@ return (
         </Box>
         {/* {CALENDAR} */}
         <Box flex="1 1 100%" ml="40px">
+            {/* CALENDAR */}
             <FullCalendar
             flex="1 1 100%"
             height="75vh"
@@ -194,10 +260,7 @@ return (
                 interactionPlugin,
                 listPlugin
             ]}
-            sx={{
-                backgroundColor: "red",
-                color: "red"
-            }}
+            sx={{}}
             headerToolbar={{
                 left: "prev,next today",
                 center: "title",
@@ -210,11 +273,14 @@ return (
             dayMaxEvents={true}
             select={handleDateClick}
             eventClick={handleEventClick}
-            eventsSet={(events) => setCurrentEvents(events)}
-            initialEvents={[{id: "55", title: "do this", date: "2022-08-14"}]}
+            events={{
+                url: `http://localhost:3000/personal_events`
+            }}
+            
             />
         </Box>
     </Box>
 </Box>
+</div>
     )
 }

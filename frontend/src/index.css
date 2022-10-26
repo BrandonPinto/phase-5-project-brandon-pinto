@@ -9,11 +9,18 @@ body,
   width: 100%;
   font-family: "Source Sans Pro", sans-serif;
 }
+.app {
+  display: flex;
+  position: relative;
+}
 
+::-webkit-scrollbar {
+  display: none;
+}
 .fc {
   margin-left: 8%;
   width:60vw;
-  min-height: 85vh
+  min-height: 80vh
 }
 .fc .fc-prev-primary {
   background-color: red;
@@ -22,10 +29,11 @@ body,
 .space {
   margin-left: 1%;
 }
-.invisible-scrollbar {
-  scrollbar-width: none;
+.fc-list-day-text {
+  color:  green
 }
-.invisible-scrollbar::-webkit-scrollbar {
-  display: none;
+.fc-list-day-side-text {
+  color: green
 }
+
 

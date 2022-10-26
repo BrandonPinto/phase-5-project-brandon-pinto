@@ -1,43 +1,50 @@
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { useContext } from "react";
-import { ColorModeContext, tokens } from "../Theme";
-import InputBase from "@mui/material/InputBase";
+import { ColorModeContext} from "../Theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import SearchIcon from "@mui/icons-material/Search"
+import DialpadIcon from '@mui/icons-material/Dialpad';
+import PeopleIcon from '@mui/icons-material/People';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import LogoutIcon from '@mui/icons-material/Logout';
+import {NavLink} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 
 const Navbar = () => {
+  
+let nav = useNavigate()
+
+let handleLogout = (e) => {
+    if(e)
+    localStorage.clear()
+    nav("/Homepage")
+  }
+
+
+
 const theme = useTheme()
-const colors = tokens(theme.palette.mode)
+
 const colorMode = useContext(ColorModeContext)
 
+// let onMouseOver = (e) => {
+//   if(e)
+//   return console.log("Calendar")
+// }
+
 return (
+
 <Box display="flex" justifyContent="space-between" p={2}>
 
-  <Box
-  display="flex"
-  backgroundColor={colors.primary[400]}
-  borderRadius="3px"
-  >
-    <InputBase sx={{
-    ml: 5,
-    margin: "1",
-    flex: 1,
-    width: "280px"
-    }} placeholder="Search Events"/>
-    <IconButton type="button" sx={{p:1}}>
-    <SearchIcon />
-    </IconButton>
-  </Box>
   <Box>
     <Typography sx={{
       fontSize: "35px"
     }}
-    >TEST</Typography>
+    >send help pls</Typography>
   </Box>
   <Box>
     <IconButton onClick={colorMode.toggleColorMode}>
@@ -47,15 +54,28 @@ return (
       <LightModeOutlinedIcon />
     )}
     </IconButton>
+    <NavLink to="/Calendar"><IconButton>
+      <CalendarViewMonthIcon name="calendar"/>
+    </IconButton></NavLink>
+    <NavLink to="/HostedEvent"><IconButton>
+      <PeopleIcon name="events"/>
+    </IconButton></NavLink>
+    <NavLink to="/Contacts"><IconButton >
+      <DialpadIcon name="contacts" />
+    </IconButton></NavLink>
     <IconButton>
-    <PersonOutlinedIcon />
+      <NotificationsOutlinedIcon name="notifications"/>
     </IconButton>
-    <IconButton>
-      <NotificationsOutlinedIcon/>
+    <NavLink to="/Profile"><IconButton >
+    <AccountBoxIcon name="profile"/>
+    </IconButton></NavLink>
+    <NavLink to="/Settings"><IconButton>
+      <SettingsOutlinedIcon name="settings"/>
+    </IconButton></NavLink>
+    <IconButton onClick={handleLogout}>
+      <LogoutIcon name="logout"/>
     </IconButton>
-    <IconButton>
-      <SettingsOutlinedIcon />
-    </IconButton>
+
   </Box>
 </Box>
   );
