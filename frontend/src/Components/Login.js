@@ -6,7 +6,7 @@ import Header from './Header';
 import { useState } from 'react'
 import {useNavigate } from 'react-router-dom';
 
-export default function Contacts() {
+export default function Login() {
 
   const isNonMobile = useMediaQuery("(min-width:600px)")
   const [user, setUser] = useState({ name: "" })
@@ -52,6 +52,9 @@ export default function Contacts() {
   return (
 
     <Box m="80px" >
+            <Header title="Welcome back, please login!" subtitle="Forgot Password?">
+        <button onClick={handleLinkToPasswordReset}></button>
+      </Header>
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
@@ -124,9 +127,7 @@ export default function Contacts() {
           </form>
         )}
       </Formik>
-      <Header title="Welcome back, please login!" subtitle="Forgot Password?">
-        <button onClick={handleLinkToPasswordReset}></button>
-      </Header>
+
     </Box>
 
   )

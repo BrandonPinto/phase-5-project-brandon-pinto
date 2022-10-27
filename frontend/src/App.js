@@ -13,6 +13,9 @@ import {useState, useEffect} from 'react';
 function App() {
 
 const [user, setUser] = useState(null)
+const [userEvents, setUserEvents] = useState([])
+const [userCommunityEvents, setUserCommunityEvents] = useState([])
+
 
 let nav = useNavigate()
 
@@ -26,9 +29,11 @@ useEffect(() => {
       },
     })
       .then((res) => res.json())
-      .then(user => {
+      .then((user) => {
+        console.log(user)
         setUser(user)
-        
+        setUserCommunityEvents(user.community_events)
+        setUserEvents(user.personal_events)
     }).then(nav("/Calendar"));
   }
 },[nav, user])
@@ -51,7 +56,7 @@ const [theme, colorMode] = useMode();
         <Route path="/Homepage" element={<Homepage /> } />
         <Route path="/Contacts" element={<Contacts /> } />
         <Route path="/Profile" element={<Profile /> } />
-        <Route path="/Calendar" element={<Calendar /> } />
+        <Route path="/Calendar" element={<Calendar user={user} userEvents={userEvents} setUserEvents={setUserEvents} userCommunityEvents={userCommunityEvents} setUserCommunityEvents={setUserCommunityEvents}/> } />
         <Route path="/HostedEvent" element={<HostedEvent /> } />
         <Route path="/Signup" element={<Signup /> } />
         <Route path="/Login" element={<Login /> } />

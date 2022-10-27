@@ -14,12 +14,8 @@ class User < ApplicationRecord
     validates :username, length: { maximum: 15 }
     validates :password, length: { minimum: 7 }
     validates :password, length: { maximum: 25 }
-    validates :user_email, uniqueness: true, presence: true, confirmation: { case_sensitive: true }
+    validates :user_email, presence: true, confirmation: { case_sensitive: true }
+    validates :user_email, uniqueness: true, on: :create
     validates :user_email, email: true
-
-    # def comm_events 
-    #     self.community_events
-    # end
-
 
 end
