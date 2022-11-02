@@ -1,7 +1,7 @@
 class PersonalEventsController < ApplicationController
-    before_action :set_personal_event, only: %i[ show destroy ]
+    before_action :set_personal_event, only: %i[ show ]
     before_action :authorized, only: [:show, :create, :update, :destroy]
-
+    before_action :find_event_to_destroy, only: [:destroy]
 def index
     events = PersonalEvent.all
     render json: events
@@ -17,7 +17,7 @@ def create
 token = request.headers['token']
 user_id = decode_token(token)
     if user_id
-        new_event = PersonalEvent.create!(title: params[:title], start: params[:start], end: params[:end], user_id:user_id)
+        new_event = PersonalEvent.create!(title: params[:title], start: params[:start], end: params[:end], user_id: user_id, def_id: def_id)
         render json: new_event
     else
         render json: {error: "One or more fields are incorrect."}, status: :unprocessable_entity
@@ -44,19 +44,22 @@ def destroy
 token = request.headers["token"]
 user_id = decode_token(token)
     if user_id
-    @personal_event.destroy
+    @destroy_event.destroy
     end
 end
 
 private
 
+def find_event_to_destroy
+    @destroy_event = PersonalEvent.find_by!(:def_id params[:def_id])
+end
 # Use callbacks to share common setup or constraints between actions.
 def set_personal_event
     @personal_event = PersonalEvent.find(params[:id])
 end
 
 def personal_event_params
-    params.permit(:title, :start, :end)
+    params.permit(:title, :start, :end, :def_id)
 end
 
 end

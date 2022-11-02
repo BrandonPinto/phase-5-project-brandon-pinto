@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import FullCalendar, { formatDate } from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -19,54 +19,27 @@ import {
 } from "@mui/material"
 
 
-export default function Calendar({ user, userCommunityEvents, userEvents, setUserEvents, setUserCommunityEvents }) {
-    let eventGuid = 0
-    const INITIAL_EVENTS = [
-        {
-            id: createEventId(),
-            title: 'All-day event',
-            start: '2022-10-28'
-        },
-        {
-            id: createEventId(),
-            title: 'All-day event',
-            start: '2022-10-26'
-        }
-
-    ]
-
-function createEventId(){
-    return String(eventGuid++)
-}
-
+export default function Calendar({ userEventsToRemove, setUserEventsToRemove, user, userCommunityEvents, userEvents, setUserEvents, setUserCommunityEvents }) {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
-    const [userCalendarEvents, setUserCalendarEvents] = useState([])
-        const getData = () => {
-            if (user) {
-            let token = localStorage.getItem("token")
-            fetch(`http://localhost:3000/me`, {
-                method: "GET",
-                headers: {
-                    token: token,
-                    "Content-Type": "application/json"
-                },
-            }).then((res) => res.json())
-                .then((data) => {
-                    console.log(data)
-                })
-        }
 
+    let getCalendarData = async () => {
+        let token = localStorage.getItem("token")
+        const res = await fetch("http://localhost:3000/events", {
+            method: "GET",
+            headers: {
+                token: token,
+                "Content-Type": "application/json"
+            },
+        })
+        const data = await res.json()
+        return data
     }
 
-    useEffect(() => {
-        getCalendarData()
-    }, [])
-
     const handleDateClick = (selected) => {
-        // console.log(selected)
+        console.log(selected)
         const title = prompt("Please enter a new title for your event")
-        const calendarApi = selected.view.calendar
+        let calendarApi = selected.view.calendar
         calendarApi.unselect()
 
         if (title !== "" && null)
@@ -84,6 +57,7 @@ function createEventId(){
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
+                def_id: selected._def.id,
                 title: title,
                 start: selected.startStr,
                 end: selected.endStr
@@ -92,38 +66,61 @@ function createEventId(){
         }).catch(error => console.log(error))
     }
 
-let getCalendarData = () => {
-        let token = localStorage.getItem("token")
-        return fetch("http://localhost:3000/events", {
-            method: "GET",
-            headers: {
-            token: token,
-            "Content-Type": "application/json"
-            },
-        }).then((res) => res.json())
-        .then((data) => {
-            console.log(data)
-           //setUserCalendarEvents(data)
-            return data
-        })
-    }
+    // const handleDateMove = (selected) => {
+    //     let title = 
+    //         let calendarApi = selected.view.calendar
+    //     calendarApi.unselect()
+
+    //     if (calendarApi.unselect() !== selected.startStr)
+    //         fetch(`http://localhost:3000/personal_events/${id}`, {
+    //             methed: "PATCH",
+    //             headers: {
+    //                 "token": localStorage.getItem("token"),
+    //                 "Content-Type": "application/json"
+    //             },
+    //             body: JSON.stringify({
+    //                 id: `${selected.dateStr}-${title}`,
+    //                 title,
+    //                 start: selected.startStr,
+    //                 end: selected.endStr,
+    //                 allDay: selected.allDay
+    //             })
+    //         })
+    // }
+
+    let removeEvent = (title) => {
+
+        const result = userEventsToRemove.filter(event => event.title !== title)
+        
+        setUserEventsToRemove(result)
+      }
+    
+      let handleDelete = (title) => {
+        fetch(`http://localhost:3000/personal_events/${userEvents.selected.title}`, {
+          method: 'DELETE'
+        }).then(res => res.json())
+          .then(() => removeEvent(title))
+      }
+
+
     const handleEventClick = (selected) => {
         if (
             window.confirm(
                 `Are you sure you want to delete the event '${selected.event.title}?`
             )
         ) {
+            handleDelete()
             selected.event.remove()
+        } else {
+            selected.revert()
         }
     }
 
 
- 
-       
-
 
 
     return (
+
         <div>
             <Navbar />
             <Header title="Your Calendar" />
@@ -228,7 +225,6 @@ let getCalendarData = () => {
                                         flex: "1 1 100%"
                                     }}
                                 >
-                                    {console.log("hello world")}
                                     {/* each item will contain each part of the users information 
                         based on what their events are-- change accordingly */}
                                     <ListItemText
@@ -259,7 +255,6 @@ let getCalendarData = () => {
                             ))}
                         </List>
                     </Box>
-                    {/* {CALENDAR} */}
                     <Box flex="1 1 100%" ml="40px">
                         {/* CALENDAR */}
                         <FullCalendar
@@ -271,12 +266,11 @@ let getCalendarData = () => {
                                 interactionPlugin,
                                 listPlugin
                             ]}
-                            // sx={{}}
-                            // headerToolbar={{
-                            //     left: "prev,next today",
-                            //     center: "title",
-                            //     right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
-                            // }}
+                            headerToolbar={{
+                                left: "prev,next today",
+                                center: "title",
+                                right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
+                            }}
                             initialView="dayGridMonth"
                             editable={true}
                             selectable={true}

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 get "/personal_events", to: "personal_events#index"
 get "user/personal_events", to: "personal_events#show"
 post "/personal_events/user", to: "personal_events#create"
-delete "/personal_events/:id", to: "personal_events#destroy"
+delete "/personal_events/:def_id", to: "personal_events#destroy"
 patch "/personal_events/:id", to: "personal_events#update"
 #community_events routes here
 get "/community_events", to: "community_events#index"

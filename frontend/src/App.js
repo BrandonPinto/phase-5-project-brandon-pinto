@@ -15,6 +15,7 @@ function App() {
 const [user, setUser] = useState(null)
 const [userEvents, setUserEvents] = useState([])
 const [userCommunityEvents, setUserCommunityEvents] = useState([])
+const [userEventsToRemove, setUserEventsToRemove] = useState([])
 
 
 let nav = useNavigate()
@@ -34,6 +35,7 @@ useEffect(() => {
         setUser(user)
         setUserCommunityEvents(user[0].community_events)
         setUserEvents(user[0].personal_events)
+        setUserEventsToRemove(user[0].personal_events)
     }).then(nav("/Calendar"));
   }
 },[nav, user])
@@ -56,7 +58,7 @@ const [theme, colorMode] = useMode();
         <Route path="/Homepage" element={<Homepage /> } />
         <Route path="/Contacts" element={<Contacts /> } />
         <Route path="/Profile" element={<Profile /> } />
-        <Route path="/Calendar" element={<Calendar user={user} userEvents={userEvents} setUserEvents={setUserEvents} userCommunityEvents={userCommunityEvents} setUserCommunityEvents={setUserCommunityEvents}/> } />
+        <Route path="/Calendar" element={<Calendar setUserEventsToRemove={setUserEventsToRemove} userEventsToRemove={userEventsToRemove} user={user} userEvents={userEvents} setUserEvents={setUserEvents} userCommunityEvents={userCommunityEvents} setUserCommunityEvents={setUserCommunityEvents}/> } />
         <Route path="/HostedEvent" element={<HostedEvent /> } />
         <Route path="/Signup" element={<Signup /> } />
         <Route path="/Login" element={<Login /> } />
