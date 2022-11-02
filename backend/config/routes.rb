@@ -31,5 +31,6 @@ delete "/contacts/:id", to: "contacts#destroy"
 #Host priv routes
 delete "/person_to_remove/:id", to: "community_events#remove_participant"
 get "/community_events/:id/participants", to: "community_events#show_event_participants"
-
+#all events relating to current user
+get "/events", to: "users#all_events"
 end

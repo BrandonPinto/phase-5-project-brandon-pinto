@@ -20,13 +20,28 @@ import {
 
 
 export default function Calendar({ user, userCommunityEvents, userEvents, setUserEvents, setUserCommunityEvents }) {
+    let eventGuid = 0
+    const INITIAL_EVENTS = [
+        {
+            id: createEventId(),
+            title: 'All-day event',
+            start: '2022-10-28'
+        },
+        {
+            id: createEventId(),
+            title: 'All-day event',
+            start: '2022-10-26'
+        }
 
+    ]
+
+function createEventId(){
+    return String(eventGuid++)
+}
 
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
-
-
-    
+    const [userCalendarEvents, setUserCalendarEvents] = useState([])
         const getData = () => {
             if (user) {
             let token = localStorage.getItem("token")
@@ -43,6 +58,10 @@ export default function Calendar({ user, userCommunityEvents, userEvents, setUse
         }
 
     }
+
+    useEffect(() => {
+        getCalendarData()
+    }, [])
 
     const handleDateClick = (selected) => {
         // console.log(selected)
@@ -73,8 +92,21 @@ export default function Calendar({ user, userCommunityEvents, userEvents, setUse
         }).catch(error => console.log(error))
     }
 
-
-
+let getCalendarData = () => {
+        let token = localStorage.getItem("token")
+        return fetch("http://localhost:3000/events", {
+            method: "GET",
+            headers: {
+            token: token,
+            "Content-Type": "application/json"
+            },
+        }).then((res) => res.json())
+        .then((data) => {
+            console.log(data)
+           //setUserCalendarEvents(data)
+            return data
+        })
+    }
     const handleEventClick = (selected) => {
         if (
             window.confirm(
@@ -84,6 +116,12 @@ export default function Calendar({ user, userCommunityEvents, userEvents, setUse
             selected.event.remove()
         }
     }
+
+
+ 
+       
+
+
 
     return (
         <div>
@@ -233,12 +271,12 @@ export default function Calendar({ user, userCommunityEvents, userEvents, setUse
                                 interactionPlugin,
                                 listPlugin
                             ]}
-                            sx={{}}
-                            headerToolbar={{
-                                left: "prev,next today",
-                                center: "title",
-                                right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
-                            }}
+                            // sx={{}}
+                            // headerToolbar={{
+                            //     left: "prev,next today",
+                            //     center: "title",
+                            //     right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
+                            // }}
                             initialView="dayGridMonth"
                             editable={true}
                             selectable={true}
@@ -246,7 +284,7 @@ export default function Calendar({ user, userCommunityEvents, userEvents, setUse
                             dayMaxEvents={true}
                             select={handleDateClick}
                             eventClick={handleEventClick}
-                            events={{ getData() { }}}
+                            initialEvents={getCalendarData}
 
                         />
                     </Box>

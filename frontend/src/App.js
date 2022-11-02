@@ -30,10 +30,10 @@ useEffect(() => {
     })
       .then((res) => res.json())
       .then((user) => {
-        console.log(user)
+        //console.log(user)
         setUser(user)
-        setUserCommunityEvents(user.community_events)
-        setUserEvents(user.personal_events)
+        setUserCommunityEvents(user[0].community_events)
+        setUserEvents(user[0].personal_events)
     }).then(nav("/Calendar"));
   }
 },[nav, user])

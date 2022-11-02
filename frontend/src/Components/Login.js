@@ -18,11 +18,6 @@ export default function Login() {
     user_email: "",
     confirm_email: ""
   }
-  // let formHandleChange = (e) => {
-  //     ...initialValues,
-  //     [e.target.name]: e.target.value
-
-  // }
 
   const handleFormSubmit = (values) => {
     console.log(values);

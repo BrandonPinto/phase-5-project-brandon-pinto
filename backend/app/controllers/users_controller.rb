@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-before_action :authorized, only: [ :show, :update]
+before_action :authorized, only: [ :all_events, :show, :update]
 
 
 def index
@@ -13,21 +13,18 @@ def show
 end
 
 
-# def all_events
-# token = request.headers["token"]
-# user = decode_token(token)
-# temp_array = []
+def all_events
+  token = request.headers["token"]
+  user = decode_token(token)
+  current_user = User.find(user)
+  if current_user
+  p_events = PersonalEvent.where(user_id: user)
+  p_events_redone = current_user.personal_events.as_json(only: %i{title start end})
+  c_events = current_user.community_events.as_json(only: %i{title start end})
 
-# p_events = PersonalEvent.find_by!(user_id: user)
-# c_events = Participant.find_by!(user_id: user)
-# temp_array.push(p_events)
-# temp_array.push(c_events)
-
-# render json: temp_array
-
-
-
-# end
+  render json: p_events_redone + c_events
+  end
+end
 
 def login #for /login
   #find by username from body
