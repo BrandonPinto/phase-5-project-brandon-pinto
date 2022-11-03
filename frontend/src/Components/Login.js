@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Button, TextField } from "@mui/material";
 import { Formik } from "formik";
 import { useMediaQuery } from '@mui/material'
+import * as yup from "yup"
 import Header from './Header';
 import { useState } from 'react'
 import {useNavigate } from 'react-router-dom';
@@ -18,6 +19,11 @@ export default function Login() {
     user_email: "",
     confirm_email: ""
   }
+
+  const schema = yup.object().shape({
+    username: yup.string().required("field required"),
+    password: yup.string().required("field required")
+  })
 
   const handleFormSubmit = (values) => {
     console.log(values);
@@ -53,6 +59,7 @@ export default function Login() {
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
+        validationSchema={schema}
       >
         {({
           values,

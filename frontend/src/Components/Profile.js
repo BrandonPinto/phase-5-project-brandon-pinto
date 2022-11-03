@@ -6,7 +6,7 @@ import Header from './Header';
 import Navbar from './Navbar';
 
 
-export default function Profile() {
+export default function Profile({ setUserContacts, userContacts }) {
 
 return (
   <>

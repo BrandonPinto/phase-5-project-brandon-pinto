@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Button, TextField } from "@mui/material";
 import { Formik } from "formik";
 import { useMediaQuery } from '@mui/material'
@@ -9,7 +9,7 @@ export default function Contacts() {
 
 const isNonMobile = useMediaQuery("(min-width:600px)")
 
-const initialValues = {
+const [initialValues, setInitialValues] = useState({
     first_name: "",
     last_name: "",
     email: "",
@@ -17,11 +17,10 @@ const initialValues = {
     phone_number: "",
     address: "",
     notes: ""
-}
+})
 
-const handleFormSubmit = (values, e) => {
-console.log(values)
-console.log(e)
+const handleFormSubmit = (values, {resetForm} ) => {
+
 let token = localStorage.getItem("token")
 fetch("http://localhost:3000/contacts", {
     method: "POST",
@@ -40,6 +39,7 @@ fetch("http://localhost:3000/contacts", {
     })
 })
 .then((res) => res.json())
+resetForm()
 }
 
     

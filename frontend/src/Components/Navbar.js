@@ -69,9 +69,6 @@ return (
     <NavLink to="/Profile"><IconButton >
     <AccountBoxIcon name="profile"/>
     </IconButton></NavLink>
-    <NavLink to="/Settings"><IconButton>
-      <SettingsOutlinedIcon name="settings"/>
-    </IconButton></NavLink>
     <IconButton onClick={handleLogout}>
       <LogoutIcon name="logout"/>
     </IconButton>

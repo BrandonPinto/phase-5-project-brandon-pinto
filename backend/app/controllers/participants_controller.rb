@@ -1,5 +1,5 @@
 class ParticipantsController < ApplicationController
-    before_action :authorized, only: [:create]
+    before_action :authorized, only: [:create, :destroy]
     before_action :find_event, only: [:destroy]
 def index
     @participants = Participant.all
@@ -20,7 +20,7 @@ def create
     puts host_id
     if user_id != host_id
         join_event = Participant.create!(user_id: user_id, community_event_id: event.id)
-        render json: join_event
+        render json: join_event, status: :ok
     else
         render json: {error: "You are the host! You cannot join your own event. You may view it in the events tab."}
     end

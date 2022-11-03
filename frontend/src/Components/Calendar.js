@@ -22,6 +22,8 @@ import {
 export default function Calendar({ userEventsToRemove, setUserEventsToRemove, currentUser, userCommunityEvents, userEvents, setUserEvents, setUserCommunityEvents }) {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
+    const [eventInfo, setEventInfo] = useState()
+
 
     let getCalendarData = async () => {
         let token = localStorage.getItem("token")
@@ -66,43 +68,43 @@ export default function Calendar({ userEventsToRemove, setUserEventsToRemove, cu
 
         if (title !== "" || title !== null)
 
-        fetch("http://localhost:3000/personal_events/user", {
-            method: "POST",
-            headers: {
-                "token": localStorage.getItem("token"),
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                title: title,
-                start: selected.startStr,
-                end: selected.endStr
+            fetch("http://localhost:3000/personal_events/user", {
+                method: "POST",
+                headers: {
+                    "token": localStorage.getItem("token"),
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    title: title,
+                    start: selected.startStr,
+                    end: selected.endStr
+                })
+            }).then((data) => {
+                console.log(data);
+                calendarApi.addEvent({
+                    id: data.id,
+                    title,
+                    start: selected.startStr,
+                    end: selected.endStr,
+                    allDay: selected.allDay
+                })
             })
-        }).then((data) => {
-            console.log(data);
-            calendarApi.addEvent({
-                id: data.id,
-                title,
-                start: selected.startStr,
-                end: selected.endStr,
-                allDay: selected.allDay
-            })
-        })
-        .catch(error => console.log(error))
+                .catch(error => console.log(error))
     }
 
     let removeEvent = (title) => {
 
         const result = userEventsToRemove.filter(event => event.title !== title)
-        
+
         setUserEventsToRemove(result)
-      }
-    
-      let handleDelete = (title) => {
+    }
+
+    let handleDelete = (title) => {
         fetch(`http://localhost:3000/personal_events/${userEvents.selected.title}`, {
-          method: 'DELETE'
+            method: 'DELETE'
         }).then(res => res.json())
-          .then(() => removeEvent(title))
-      }
+            .then(() => removeEvent(title))
+    }
 
 
     const handleEventClick = (selected) => {
@@ -121,7 +123,10 @@ export default function Calendar({ userEventsToRemove, setUserEventsToRemove, cu
     }
 
 
-
+    let handleEventDrag = (e) => {
+        let currentSelectedEvent = e.event
+        console.log(currentSelectedEvent)
+    }
 
     return (
 
@@ -129,7 +134,6 @@ export default function Calendar({ userEventsToRemove, setUserEventsToRemove, cu
             <Navbar />
             <Header title={`${currentUser.username}'s Calendar`} />
             <Box m="20px">
-
                 <Box display="flex" justifyContent="space-between">
                     {/* profile component will go here */}
                     <Box className="invisible-scrollbar"
@@ -177,8 +181,6 @@ export default function Calendar({ userEventsToRemove, setUserEventsToRemove, cu
                                                 {event.title}
                                             </Typography>
                                         }
-
-
                                         secondary={
                                             <Typography sx={{
                                                 fontSize: "10px",
@@ -220,7 +222,7 @@ export default function Calendar({ userEventsToRemove, setUserEventsToRemove, cu
                                     key={event.id}
                                     sx={{
                                         backgroundColor:
-                                            colors.greenAccent[500],
+                                        colors.greenAccent[500],
                                         margin: "10px 0",
                                         borderRadius: "30px",
                                         padding: '4px 20px',
@@ -262,6 +264,7 @@ export default function Calendar({ userEventsToRemove, setUserEventsToRemove, cu
                     <Box flex="1 1 100%" ml="40px">
                         {/* CALENDAR */}
                         <FullCalendar
+                            timeZone="EST"
                             flex="1 1 100%"
                             height="75vh"
                             plugins={[
@@ -276,14 +279,12 @@ export default function Calendar({ userEventsToRemove, setUserEventsToRemove, cu
                                 right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
                             }}
                             initialView="dayGridMonth"
-                            editable={true}
                             selectable={true}
                             selectMirror={true}
                             dayMaxEvents={true}
                             select={handleDateClick}
                             eventClick={handleEventClick}
                             initialEvents={getCalendarData}
-
                         />
                     </Box>
                 </Box>
