@@ -44,7 +44,7 @@ return (
     <Typography sx={{
       fontSize: "35px"
     }}
-    >send help pls</Typography>
+    >Calendar4U</Typography>
   </Box>
   <Box>
     <IconButton onClick={colorMode.toggleColorMode}>

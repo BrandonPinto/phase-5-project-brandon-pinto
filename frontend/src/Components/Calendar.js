@@ -19,7 +19,7 @@ import {
 } from "@mui/material"
 
 
-export default function Calendar({ userEventsToRemove, setUserEventsToRemove, user, userCommunityEvents, userEvents, setUserEvents, setUserCommunityEvents }) {
+export default function Calendar({ userEventsToRemove, setUserEventsToRemove, currentUser, userCommunityEvents, userEvents, setUserEvents, setUserCommunityEvents }) {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
 
@@ -34,36 +34,6 @@ export default function Calendar({ userEventsToRemove, setUserEventsToRemove, us
         })
         const data = await res.json()
         return data
-    }
-
-    const handleDateClick = (selected) => {
-        console.log(selected)
-        const title = prompt("Please enter a new title for your event")
-        let calendarApi = selected.view.calendar
-        calendarApi.unselect()
-
-        if (title !== "" && null)
-            calendarApi.addEvent({
-                id: `${selected.dateStr}-${title}`,
-                title,
-                start: selected.startStr,
-                end: selected.endStr,
-                allDay: selected.allDay
-            })
-        fetch("http://localhost:3000/personal_events/user", {
-            method: "POST",
-            headers: {
-                "token": localStorage.getItem("token"),
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                def_id: selected._def.id,
-                title: title,
-                start: selected.startStr,
-                end: selected.endStr
-            })
-
-        }).catch(error => console.log(error))
     }
 
     // const handleDateMove = (selected) => {
@@ -88,6 +58,38 @@ export default function Calendar({ userEventsToRemove, setUserEventsToRemove, us
     //         })
     // }
 
+    const handleDateClick = (selected) => {
+        console.log(selected)
+        const title = prompt("Please enter a new title for your event")
+        let calendarApi = selected.view.calendar
+        calendarApi.unselect()
+
+        if (title !== "" || title !== null)
+
+        fetch("http://localhost:3000/personal_events/user", {
+            method: "POST",
+            headers: {
+                "token": localStorage.getItem("token"),
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                title: title,
+                start: selected.startStr,
+                end: selected.endStr
+            })
+        }).then((data) => {
+            console.log(data);
+            calendarApi.addEvent({
+                id: data.id,
+                title,
+                start: selected.startStr,
+                end: selected.endStr,
+                allDay: selected.allDay
+            })
+        })
+        .catch(error => console.log(error))
+    }
+
     let removeEvent = (title) => {
 
         const result = userEventsToRemove.filter(event => event.title !== title)
@@ -104,6 +106,8 @@ export default function Calendar({ userEventsToRemove, setUserEventsToRemove, us
 
 
     const handleEventClick = (selected) => {
+        console.log(selected)
+        // fetch(`http://localhost:3000/personal_events/${id}`)
         if (
             window.confirm(
                 `Are you sure you want to delete the event '${selected.event.title}?`
@@ -123,7 +127,7 @@ export default function Calendar({ userEventsToRemove, setUserEventsToRemove, us
 
         <div>
             <Navbar />
-            <Header title="Your Calendar" />
+            <Header title={`${currentUser.username}'s Calendar`} />
             <Box m="20px">
 
                 <Box display="flex" justifyContent="space-between">

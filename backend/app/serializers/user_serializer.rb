@@ -3,4 +3,5 @@ class UserSerializer < ActiveModel::Serializer
   has_many :personal_events
   has_many :community_events
   has_many :contacts
+
 end

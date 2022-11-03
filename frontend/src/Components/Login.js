@@ -91,28 +91,6 @@ export default function Login() {
                 name="password"
                 sx={{ gridColumn: "span 2" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="email"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.user_email}
-                name="user_email"
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="email"
-                label="Confirm Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.confirm_email}
-                name="confirm_email"
-                sx={{ gridColumn: "span 2" }}
-              />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
