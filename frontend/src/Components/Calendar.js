@@ -22,7 +22,6 @@ import {
 export default function Calendar({ userEventsToRemove, setUserEventsToRemove, currentUser, userCommunityEvents, userEvents, setUserEvents, setUserCommunityEvents }) {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
-    const [eventInfo, setEventInfo] = useState()
 
 
     let getCalendarData = async () => {
@@ -38,35 +37,13 @@ export default function Calendar({ userEventsToRemove, setUserEventsToRemove, cu
         return data
     }
 
-    // const handleDateMove = (selected) => {
-    //     let title = 
-    //         let calendarApi = selected.view.calendar
-    //     calendarApi.unselect()
-
-    //     if (calendarApi.unselect() !== selected.startStr)
-    //         fetch(`http://localhost:3000/personal_events/${id}`, {
-    //             methed: "PATCH",
-    //             headers: {
-    //                 "token": localStorage.getItem("token"),
-    //                 "Content-Type": "application/json"
-    //             },
-    //             body: JSON.stringify({
-    //                 id: `${selected.dateStr}-${title}`,
-    //                 title,
-    //                 start: selected.startStr,
-    //                 end: selected.endStr,
-    //                 allDay: selected.allDay
-    //             })
-    //         })
-    // }
-
     const handleDateClick = (selected) => {
         console.log(selected)
         const title = prompt("Please enter a new title for your event")
         let calendarApi = selected.view.calendar
         calendarApi.unselect()
 
-        if (title !== "" || title !== null)
+        if (title !== "" && title !== null)
 
             fetch("http://localhost:3000/personal_events/user", {
                 method: "POST",
